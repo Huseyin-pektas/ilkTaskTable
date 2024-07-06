@@ -8,10 +8,16 @@ const SingleUserList = ({ users }) => {
 
     const handleSearch =()=>{
         const filtered = users.filter(user => user.name.toLowerCase().includes(searcTerm.toLowerCase())
-         ||user.username.toLowerCase().includes(searcTerm.toLowerCase())|| user.email.toLowerCase().includes(searcTerm.toLowerCase())
+         ||user.username.toLowerCase().includes(searcTerm.toLowerCase())
+        
     )
+    const sorted = filtered.sort((a,b)=>{
+        if(a.name.toLowerCase()< b.name.toLowerCase()) return-1;
+        if(a.name.toLowerCase()> b.name.toLowerCase()) return 1;
+        return 0;
+    })
+    setFilteredUsers(sorted)
 
-    
     if(filtered.length === 0){
         alert("arama kreterlerine uygun arama yapınız")
     }
@@ -20,6 +26,7 @@ const SingleUserList = ({ users }) => {
     }
     useEffect(() => {
         setFilteredUsers(users);
+      
     }, [users]);
 
     return (
