@@ -1,23 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Header from './components/Header';
+import SingleUserList from './components/SingleUserList';
+
+
 
 function App() {
+  const [users, setUsers] = useState([])
+
+  const FectData = async () => {
+    const reponse = await axios.get("http://localhost:3005/users")
+    setUsers(reponse.data);
+
+
+    console.log(reponse.data)
+
+  }
+
+  useEffect(() => {
+    // axios.get("http://localhost:3005/users").then((res)=>console.log(res.data))
+    FectData()
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <SingleUserList users={users} />
     </div>
   );
 }
